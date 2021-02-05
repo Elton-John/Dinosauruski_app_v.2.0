@@ -14,10 +14,10 @@ import java.util.Set;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 
-class StudentTest {
+class IndividualClassTest {
 
     private static Validator validator;
-    private Student student;
+    private IndividualClass individualClass;
 
     @BeforeAll
     public static void setUp() {
@@ -27,16 +27,10 @@ class StudentTest {
 
     @BeforeEach
     public void setValidTestObject() {
-        student = new Student();
-        student.setFirstName("Elton");
-        student.setLastName("John");
-        student.setNickname("star");
-        student.setEmail("elton@gmail.com");
-        student.setPassword("123");
-        student.setPriceForOneLesson(new BigDecimal("100.00"));
-        student.setOverpayment(new BigDecimal("000.00"));
-        student.setHasActivatedAccount(true);
-        student.setActive(true);
+        individualClass = new IndividualClass();
+        individualClass.setPriceForOneLesson(new BigDecimal("100.00"));
+        individualClass.setOverpayment(new BigDecimal("000.00"));
+             individualClass.setActive(true);
 
     }
 
@@ -45,8 +39,8 @@ class StudentTest {
         //given  //valid object initialized in @BeforeEach
 
         //when
-        student.setPriceForOneLesson(new BigDecimal("000.00"));
-        Set<ConstraintViolation<Student>> violations = validator.validate(student);
+        individualClass.setPriceForOneLesson(new BigDecimal("000.00"));
+        Set<ConstraintViolation<IndividualClass>> violations = validator.validate(individualClass);
 
         //then
         violations.forEach(action -> assertThat(action.getMessage(), is("must be greater than 0.0")));

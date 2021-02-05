@@ -15,7 +15,6 @@ import javax.validation.Valid;
 public class Rebooking {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Valid

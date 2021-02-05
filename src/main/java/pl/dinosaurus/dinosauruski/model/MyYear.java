@@ -15,7 +15,7 @@ import javax.validation.constraints.NotNull;
 @Setter
 @EqualsAndHashCode(of = {"id"})
 @ToString
-public class Year {
+public class MyYear {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
