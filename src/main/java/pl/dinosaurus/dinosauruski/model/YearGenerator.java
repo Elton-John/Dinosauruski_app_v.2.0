@@ -6,6 +6,8 @@ import javax.persistence.*;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
+import java.time.LocalDate;
+import java.time.Year;
 
 @Entity
 @Table(name = "years")
@@ -35,4 +37,8 @@ public class YearGenerator {
     @ToString.Exclude
     @ManyToOne
     private Teacher teacher;
+
+    public int getCurrentYear() {
+        return Year.now().getValue();
+    }
 }

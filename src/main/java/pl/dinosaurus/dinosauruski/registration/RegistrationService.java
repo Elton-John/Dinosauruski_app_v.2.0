@@ -5,8 +5,10 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import pl.dinosaurus.dinosauruski.email.EmailService;
+import pl.dinosaurus.dinosauruski.model.Teacher;
 import pl.dinosaurus.dinosauruski.model.User;
 import pl.dinosaurus.dinosauruski.user.UserService;
+import pl.dinosaurus.dinosauruski.yearGenerator.YearGeneratorService;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
@@ -19,6 +21,7 @@ public class RegistrationService {
     private final UserService userService;
     private final VerificationTokenRepository tokenRepository;
     private final EmailService emailService;
+    private final YearGeneratorService yearGeneratorService;
 
     public void saveUserBeforeEmailVerification(User user) {
         user.setHasActivatedAccount(false);
@@ -49,7 +52,12 @@ public class RegistrationService {
     }
 
     public void saveUserAfterVerification(User user) {
+
         user.setHasActivatedAccount(true);
+        if (user.getType().equals("teacher")) {
+             yearGeneratorService.setCurrentYearGenerationForNewTeacher( user);
+        }
+
         userService.update(user);
     }
 }

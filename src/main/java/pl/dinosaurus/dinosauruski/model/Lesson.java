@@ -57,7 +57,7 @@ public class Lesson {
     @ToString.Exclude
     @Valid
     @ManyToOne()
-    private WeekGenerator weeks;
+    private WeekGenerator week;
 
     @ToString.Exclude
     @OneToOne(mappedBy = "lesson")
