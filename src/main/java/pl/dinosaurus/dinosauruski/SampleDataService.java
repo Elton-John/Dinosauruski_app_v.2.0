@@ -15,7 +15,6 @@ public class SampleDataService {
 
     public void addSampleTeacher() {
         User user = new Teacher();
-        user.setUsername("elti");
         user.setPassword("0000");
         user.setFirstName("elton");
         user.setLastName("john");
@@ -28,7 +27,6 @@ public class SampleDataService {
 
     public void addSampleStudent() {
         User user = new Student();
-        user.setUsername("eli");
         user.setPassword("1111");
         user.setFirstName("elon");
         user.setLastName("musk");

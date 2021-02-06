@@ -13,20 +13,13 @@ import javax.servlet.http.HttpSession;
 
 @Controller
 @AllArgsConstructor
-public class HomePageController {
+public class HomeController {
 
     private final SampleDataService sampleDataService;
 
     @GetMapping("/")
     public String home() {
-        return "index";
-    }
-
-    @GetMapping("/sampleData")
-    public String loadData() {
-        sampleDataService.addSampleTeacher();
-        sampleDataService.addSampleStudent();
-        return "index";
+        return "home";
     }
 
     @GetMapping("/login-error")
@@ -56,5 +49,10 @@ public class HomePageController {
         return "student/profile";
     }
 
-
+    @GetMapping("/sampleData")
+    public String loadData() {
+        sampleDataService.addSampleTeacher();
+        sampleDataService.addSampleStudent();
+        return "index";
+    }
 }
