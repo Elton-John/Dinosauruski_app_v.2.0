@@ -4,8 +4,9 @@ import pl.dinosaurus.dinosauruski.model.User;
 
 public interface UserService {
 
-    User findByUsername(String name);
+    User findByEmail(String email);
 
     void saveNewUser(User user);
+
 
 }

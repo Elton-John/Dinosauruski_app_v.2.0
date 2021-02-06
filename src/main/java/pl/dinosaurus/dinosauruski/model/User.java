@@ -28,10 +28,6 @@ public class User {
 
     @NotBlank
     @Column(nullable = false)
-    private String username;
-
-    @NotBlank
-    @Column(nullable = false)
     @Size(max = 25)
     private String firstName;
 
@@ -47,7 +43,7 @@ public class User {
 
     @NotBlank
     @Email
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     @Size(max = 50)
     private String email;
 

@@ -20,8 +20,8 @@ public class UserServiceImpl implements UserService {
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Override
-    public User findByUsername(String name) {
-        return userRepository.findByUsername(name);
+    public User findByEmail(String email) {
+        return userRepository.findByEmail(email);
     }
 
     @Override
