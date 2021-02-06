@@ -28,6 +28,10 @@ public class User {
 
     @NotBlank
     @Column(nullable = false)
+    private String username;
+
+    @NotBlank
+    @Column(nullable = false)
     @Size(max = 25)
     private String firstName;
 

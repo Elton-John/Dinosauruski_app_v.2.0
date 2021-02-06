@@ -7,5 +7,5 @@ import pl.dinosaurus.dinosauruski.model.User;
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {
 
-    User findByFirstName(String firstName);
+    User findByUsername(String username);
 }

@@ -13,6 +13,11 @@ public class HomePageController {
 
     @GetMapping("/")
     public String home() {
+        return "index";
+    }
+
+    @GetMapping("/sampleData")
+    public String loadData() {
         sampleDataService.addSampleTeacher();
         sampleDataService.addSampleStudent();
         return "index";

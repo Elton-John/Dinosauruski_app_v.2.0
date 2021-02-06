@@ -7,6 +7,8 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
+import pl.dinosaurus.dinosauruski.MySimpleUrlAuthenticationSuccessHandler;
 import pl.dinosaurus.dinosauruski.user.UserDetailsServiceImpl;
 
 @Configuration
@@ -24,20 +26,23 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         return new UserDetailsServiceImpl();
     }
 
+    @Bean
+    public AuthenticationSuccessHandler myAuthenticationSuccessHandler() {
+        return new MySimpleUrlAuthenticationSuccessHandler();
+    }
+
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
                 .antMatchers("/register/**", "/password/reset/**").not().fullyAuthenticated()
-                .antMatchers("teacher/**").hasRole("TEACHER")
-                .antMatchers("student/**").hasRole("STUDENT")
-                .antMatchers("/", "/resources/**").permitAll()
+                .antMatchers("/teacher/**").hasRole("TEACHER")
+                .antMatchers("/student/**").hasRole("STUDENT")
+                .antMatchers("/", "/resources/**", "/sampleData").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()
                 .loginPage("/login").permitAll()
-                .defaultSuccessUrl("/teacher/cockpit", true)
-//               .loginProcessingUrl("/login")
-//                .successHandler(myAuthenticationSuccessHandler())
+                .successHandler(myAuthenticationSuccessHandler())
                 .permitAll()
                 .failureUrl("/login-error")
                 .and()
@@ -46,7 +51,5 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .permitAll()
                 .and()
                 .exceptionHandling().accessDeniedPage("/accessDenied");
-
-
     }
 }

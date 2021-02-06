@@ -20,8 +20,8 @@ public class UserServiceImpl implements UserService {
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Override
-    public User findByFirstName(String name) {
-        return userRepository.findByFirstName(name);
+    public User findByUsername(String name) {
+        return userRepository.findByUsername(name);
     }
 
     @Override
@@ -31,12 +31,12 @@ public class UserServiceImpl implements UserService {
     }
 
     private void setProperFields(User user) {
-        setEncodePassword(user);
+        setEncodedPassword(user);
         setRoleForNewUser(user);
         user.setHasActivatedAccount(false);
     }
 
-    private void setEncodePassword(User user) {
+    private void setEncodedPassword(User user) {
         String encodedPassword = bCryptPasswordEncoder.encode(user.getPassword());
         user.setPassword(encodedPassword);
     }
