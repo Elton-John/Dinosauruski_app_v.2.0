@@ -8,7 +8,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
-import pl.dinosaurus.dinosauruski.MySimpleUrlAuthenticationSuccessHandler;
+import pl.dinosaurus.dinosauruski.config.MySimpleUrlAuthenticationSuccessHandler;
 import pl.dinosaurus.dinosauruski.user.UserDetailsServiceImpl;
 
 @Configuration

@@ -1,4 +1,4 @@
-package pl.dinosaurus.dinosauruski;
+package pl.dinosaurus.dinosauruski.config;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
