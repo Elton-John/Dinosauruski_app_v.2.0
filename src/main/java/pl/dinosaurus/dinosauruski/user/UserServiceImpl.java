@@ -20,6 +20,11 @@ public class UserServiceImpl implements UserService {
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Override
+    public boolean emailAlreadyExist(String email) {
+        return userRepository.findByEmail(email) != null;
+   }
+
+    @Override
     public User findByEmail(String email) {
         return userRepository.findByEmail(email);
     }
@@ -30,10 +35,14 @@ public class UserServiceImpl implements UserService {
         userRepository.save(user);
     }
 
+    @Override
+    public void update(User user) {
+        userRepository.save(user);
+    }
+
     private void setProperFields(User user) {
         setEncodedPassword(user);
         setRoleForNewUser(user);
-        user.setHasActivatedAccount(false);
     }
 
     private void setEncodedPassword(User user) {
