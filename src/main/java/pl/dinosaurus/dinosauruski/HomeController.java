@@ -55,4 +55,5 @@ public class HomeController {
         sampleDataService.addSampleStudent();
         return "index";
     }
+
 }
