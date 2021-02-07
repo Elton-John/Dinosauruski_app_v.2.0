@@ -6,6 +6,11 @@ import javax.persistence.*;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
+import java.time.DayOfWeek;
+import java.time.LocalDate;
+import java.time.Year;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -21,18 +26,16 @@ public class YearInCalendar {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @NotNull
     @Min(1900)
     @Max(3000)
     private Integer year;
 
     @NotNull
     @org.hibernate.annotations.Type(type = "true_false")
-    private Boolean isGenerated;
-
-    @NotNull
-    @org.hibernate.annotations.Type(type = "true_false")
     private Boolean isArchived;
 
+    @NotNull
     @ToString.Exclude
     @ManyToOne
     private Teacher teacher;
@@ -41,4 +44,17 @@ public class YearInCalendar {
     @OneToMany(mappedBy = "yearInCalendar")
     private Set<WeekInCalendar> weeks;
 
+
+    public List<LocalDate> generateMondayDatesOfYear() {
+        List<LocalDate> mondays = new ArrayList<>();
+
+        int daysInYear = Year.of(year).length();
+        for (int i = 1; i < daysInYear; i++) {
+            LocalDate date = LocalDate.ofYearDay(year, i);
+            if (date.getDayOfWeek().equals(DayOfWeek.MONDAY)) {
+                mondays.add(date);
+            }
+        }
+        return mondays;
+    }
 }

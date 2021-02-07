@@ -47,6 +47,7 @@
                 <div class="form-group">
                     <label for="repeatedPassword">Powtórz hasło:</label>
                     <input type="password" class="form-control" th:field="*{repeatedPassword}" id="repeatedPassword">
+                    <p class="text-danger" th:errors="*{repeatedPassword}"></p>
                     <p class="text-danger" th:text="${passwordError}"></p>
                 </div>
                 <div class="form-group">

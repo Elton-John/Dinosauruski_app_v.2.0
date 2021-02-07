@@ -15,6 +15,18 @@
 <h1>cockpit nauczyciela</h1>
 
 <form th:action="@{/logout}" th:method="POST">
+<!--    <div th:text="${years}"></div>-->
+
+    <table>
+        <tr>
+            <th>YEAR</th>
+
+        </tr>
+        <tr th:each="year : ${years}">
+            <td th:text="${year.toString()}">Onions</td>
+
+        </tr>
+    </table>
     <button type="submit"> wyloguj</button>
 
 </form>

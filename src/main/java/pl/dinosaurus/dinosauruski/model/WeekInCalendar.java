@@ -6,12 +6,8 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import java.time.DayOfWeek;
 import java.time.LocalDate;
-import java.time.Year;
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -46,7 +42,6 @@ public class WeekInCalendar {
     @org.hibernate.annotations.Type(type = "true_false")
     private Boolean isArchived;
 
-    @NotNull
     @ToString.Exclude
     @ManyToOne
     private YearInCalendar yearInCalendar;
@@ -54,20 +49,5 @@ public class WeekInCalendar {
     @ToString.Exclude
     @OneToMany(mappedBy = "week")
     private Set<Lesson> lessons = new HashSet<>();
-
-
-    public List<LocalDate> generateMondayDatesOfYear(int year) {
-        List<LocalDate> mondays = new ArrayList<>();
-
-        int daysInYear = Year.of(year).length();
-        for (int i = 1; i < daysInYear; i++) {
-            LocalDate date = LocalDate.ofYearDay(year, i);
-            if (date.getDayOfWeek().equals(DayOfWeek.MONDAY)) {
-                mondays.add(date);
-            }
-        }
-        return mondays;
-    }
-
 
 }
