@@ -33,15 +33,15 @@ public class Teacher extends User {
     @OneToMany(mappedBy = "teacher")
     private Set<Payment> payments = new HashSet<>();
 
-    @ToString.Exclude
-    @OneToMany(mappedBy = "teacher")
-    private Set<WeekGenerator> weeks = new HashSet<>();
+//    @ToString.Exclude
+//    @OneToMany(mappedBy = "teacher")
+//    private Set<WeekInCalendar> weeks = new HashSet<>();
 
     @ToString.Exclude
     @OneToMany(mappedBy = "teacher")
     private Set<IndividualClass> individualClasses;
 
     @OneToMany(mappedBy = "teacher")
-    private Set<YearGenerator> years;
+    private Set<YearInCalendar> years;
 
 }

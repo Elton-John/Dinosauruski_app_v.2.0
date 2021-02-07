@@ -10,7 +10,9 @@ import pl.dinosaurus.dinosauruski.email.EmailService;
 import pl.dinosaurus.dinosauruski.model.Teacher;
 import pl.dinosaurus.dinosauruski.model.User;
 import pl.dinosaurus.dinosauruski.user.UserService;
-import pl.dinosaurus.dinosauruski.yearGenerator.YearGeneratorService;
+import pl.dinosaurus.dinosauruski.year.YearService;
+
+import java.time.Year;
 
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
@@ -24,28 +26,29 @@ class RegistrationServiceTest {
     @Mock
     private EmailService emailService;
     @Mock
-    private YearGeneratorService yearGeneratorService;
+    private YearService yearService;
 
     @InjectMocks
     RegistrationService registrationService;
 
-    @DisplayName("if new user has teacher type then yearGeneration has set")
+    @DisplayName("if new user is a teacher, then yearInCalendar has set")
     @Test
-    void newlyCreatedUserAfterVerificationShouldHaveYearGeneratorSetIfTypeIsTeacher() {
+    void newlyCreatedUserAfterVerificationShouldHaveYearInCalendarSetIfTypeIsTeacher() {
         //given
         User teacher = new Teacher();
         teacher.setId(1L);
         teacher.setType("teacher");
+        int year = Year.now().getValue();
 
         User student = new Teacher();
         student.setId(2L);
         student.setType("student");
 
         //when  //then
-        registrationService.saveUserAfterVerification(teacher);
-        registrationService.saveUserAfterVerification(student);
-        verify(yearGeneratorService).setCurrentYearGenerationForNewTeacher(teacher);
-        verify(yearGeneratorService, never()).setCurrentYearGenerationForNewTeacher(student);
+        registrationService.updateUserAfterVerification(teacher);
+        registrationService.updateUserAfterVerification(student);
+        verify(yearService).setYearInCalendarForTeacher(year, (Teacher) teacher);
+        verify(yearService, never()).setYearInCalendarForTeacher(year, (Teacher) student);
 
     }
 

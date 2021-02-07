@@ -20,22 +20,21 @@ import java.util.Set;
 @NoArgsConstructor
 @Getter
 @Setter
-@EqualsAndHashCode(of = {"id"})
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @ToString
-public class WeekGenerator {
+public class WeekInCalendar {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @EqualsAndHashCode.Include
     private Long id;
 
     @NotNull
     @Range(min = 0, max = 60)
+    @EqualsAndHashCode.Include
     private Integer numberOfWeek;
 
-    @NotNull
-    @Range(min = 1900, max = 3000)
-    private Integer year;
-
+    @EqualsAndHashCode.Include
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate mondayDate;
 
@@ -47,9 +46,10 @@ public class WeekGenerator {
     @org.hibernate.annotations.Type(type = "true_false")
     private Boolean isArchived;
 
+    @NotNull
     @ToString.Exclude
     @ManyToOne
-    private Teacher teacher;
+    private YearInCalendar yearInCalendar;
 
     @ToString.Exclude
     @OneToMany(mappedBy = "week")

@@ -85,7 +85,7 @@ public class RegistrationController {
         }
 
         User user = verificationToken.getUser();
-        registrationService.saveUserAfterVerification(user);
+        registrationService.updateUserAfterVerification(user);
         return "redirect:/login";
     }
 

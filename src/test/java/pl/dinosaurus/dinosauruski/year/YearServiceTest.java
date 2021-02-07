@@ -9,12 +9,9 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import pl.dinosaurus.dinosauruski.model.Teacher;
 import pl.dinosaurus.dinosauruski.week.WeekService;
 
-import java.time.Year;
-
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 
 @ExtendWith(MockitoExtension.class)
@@ -30,43 +27,42 @@ class YearServiceTest {
     private YearService yearService;
 
     @Test
-    void newlyCreatedTeacherAfterVerificationShouldHaveYearYearInCalendarWithCurrentYearSet() {
+    void shouldBeAbleSetYearInCalendarForTeacher() {
         //given
         Teacher teacher = new Teacher();
+        int year = 2021;
         //when
-        yearService.setCurrentYearGenerationForNewTeacher(teacher);
-        //then
-        teacher.getYears().forEach(yearInCalendar -> assertThat(yearInCalendar.getYear(), is(Year.now().getValue())));
-    }
-
-    @Test
-    void newlyCreatedTeacherAfterVerificationShouldHaveOnlyOneYearInCalendarSet() {
-        //given
-        Teacher teacher = new Teacher();
-        //when
-        yearService.setCurrentYearGenerationForNewTeacher(teacher);
+        yearService.setYearInCalendarForTeacher(year, teacher);
         //then
         assertThat(teacher.getYears().size(), is(1));
     }
 
     @Test
-    void newlyCreatedTeacherShouldHaveYearGeneratorWithGeneratedTrueSet() {
+    void newlyCreatedYearInCalendarShouldHaveAllFieldsSet() {
         //given
         Teacher teacher = new Teacher();
+        int year = 2021;
         //when
-        yearService.setCurrentYearGenerationForNewTeacher(teacher);
+        yearService.setYearInCalendarForTeacher(year, teacher);
         //then
-        teacher.getYears().forEach(yearInCalendar -> assertTrue(yearInCalendar.getIsGenerated()));
+        teacher.getYears().forEach(yearInCalendar -> {
+            assertNotNull(yearInCalendar.getIsGenerated());
+            assertNotNull(yearInCalendar.getIsArchived());
+            assertNotNull(yearInCalendar.getYear());
+            assertNotNull(yearInCalendar.getWeeks());
+            assertNotNull(yearInCalendar.getTeacher());
+        });
     }
 
     @Test
-    void newlyCreatedYearInWeekShouldHaveWeeksSet() {
+    void newlyCreatedYearInCalendarShouldHaveGeneratedWeeks() {
         //given
         Teacher teacher = new Teacher();
+        int year = 2021;
         //when
-        yearService.setCurrentYearGenerationForNewTeacher(teacher);
+        yearService.setYearInCalendarForTeacher(year, teacher);
         //then
-        teacher.getYears().forEach(yearInCalendar -> assertNotNull(yearInCalendar.getWeeks()));
-
+        teacher.getYears().forEach(yearInCalendar -> assertThat(yearInCalendar.getWeeks().size(), is(52)));
     }
+
 }

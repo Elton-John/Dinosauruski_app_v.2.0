@@ -8,9 +8,10 @@ import pl.dinosaurus.dinosauruski.email.EmailService;
 import pl.dinosaurus.dinosauruski.model.Teacher;
 import pl.dinosaurus.dinosauruski.model.User;
 import pl.dinosaurus.dinosauruski.user.UserService;
-import pl.dinosaurus.dinosauruski.yearGenerator.YearGeneratorService;
+import pl.dinosaurus.dinosauruski.year.YearService;
 
 import java.time.LocalDateTime;
+import java.time.Year;
 import java.util.UUID;
 
 @Service
@@ -21,7 +22,7 @@ public class RegistrationService {
     private final UserService userService;
     private final VerificationTokenRepository tokenRepository;
     private final EmailService emailService;
-    private final YearGeneratorService yearGeneratorService;
+    private final YearService yearService;
 
     public void saveUserBeforeEmailVerification(User user) {
         user.setHasActivatedAccount(false);
@@ -51,13 +52,12 @@ public class RegistrationService {
         return token;
     }
 
-    public void saveUserAfterVerification(User user) {
-
+    public void updateUserAfterVerification(User user) {
         user.setHasActivatedAccount(true);
         if (user.getType().equals("teacher")) {
-             yearGeneratorService.setCurrentYearGenerationForNewTeacher( user);
+            int year = Year.now().getValue();
+            yearService.setYearInCalendarForTeacher(year, (Teacher) user);
         }
-
         userService.update(user);
     }
 }

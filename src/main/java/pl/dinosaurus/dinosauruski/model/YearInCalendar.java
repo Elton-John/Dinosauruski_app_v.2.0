@@ -6,8 +6,7 @@ import javax.persistence.*;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
-import java.time.LocalDate;
-import java.time.Year;
+import java.util.Set;
 
 @Entity
 @Table(name = "years")
@@ -17,7 +16,7 @@ import java.time.Year;
 @Setter
 @EqualsAndHashCode(of = {"id"})
 @ToString
-public class YearGenerator {
+public class YearInCalendar {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -38,7 +37,8 @@ public class YearGenerator {
     @ManyToOne
     private Teacher teacher;
 
-    public int getCurrentYear() {
-        return Year.now().getValue();
-    }
+    @ToString.Exclude
+    @OneToMany(mappedBy = "yearInCalendar")
+    private Set<WeekInCalendar> weeks;
+
 }
