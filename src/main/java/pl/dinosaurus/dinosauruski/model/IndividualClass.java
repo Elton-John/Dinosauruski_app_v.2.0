@@ -15,7 +15,7 @@ import java.math.BigDecimal;
 @Getter
 @Setter
 @EqualsAndHashCode(of = {"id"})
-@ToString
+@ToString(exclude = {"teacher", "student"})
 public class IndividualClass {
 
     @Id

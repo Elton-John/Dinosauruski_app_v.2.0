@@ -15,7 +15,7 @@ import java.time.LocalTime;
 @Getter
 @Setter
 @EqualsAndHashCode(of = {"id"})
-@ToString
+@ToString(exclude = {"teacher", "regularStudent"})
 public class Slot {
 
     @Id
@@ -34,11 +34,10 @@ public class Slot {
     @NotNull
     private boolean archived;
 
-    @ToString.Exclude
+
     @ManyToOne
     private Teacher teacher;
 
-    @ToString.Exclude
     @Valid
     @ManyToOne()
     private Student regularStudent;

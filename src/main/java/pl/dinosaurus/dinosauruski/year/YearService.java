@@ -22,7 +22,6 @@ public class YearService {
     public void setYearInCalendarForTeacher(int year, Teacher teacher) {
         YearInCalendar yearInCalendar = new YearInCalendar();
         yearInCalendar.setYear(year);
-        yearInCalendar.setIsArchived(false);
         yearInCalendar.setTeacher(teacher);
         teacher.setYears(new HashSet<>(Collections.singletonList(yearInCalendar)));
         YearInCalendar savedYearInCalendar = yearRepository.save(yearInCalendar);

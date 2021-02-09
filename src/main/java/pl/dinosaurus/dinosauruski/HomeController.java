@@ -50,6 +50,7 @@ public class HomeController {
         Teacher user = (Teacher) customUser.getUser();
         Set<YearInCalendar> years = yearService.getYearsByTeacherId(user.getId());
         model.addAttribute("years", years);
+        model.addAttribute("teacher", user);
         return "teacher/cockpit";
     }
 

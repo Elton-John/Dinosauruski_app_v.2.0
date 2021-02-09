@@ -20,7 +20,6 @@ import java.util.Set;
 @Getter
 @Setter
 @EqualsAndHashCode(of = {"id"})
-@ToString
 public class YearInCalendar {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -44,6 +43,21 @@ public class YearInCalendar {
     @OneToMany(mappedBy = "yearInCalendar")
     private Set<WeekInCalendar> weeks;
 
+    @PrePersist
+    public void prePersist() {
+        isArchived = false;
+    }
+
+    @Override
+    public String toString() {
+        return "YearInCalendar{" +
+                "id=" + id +
+                ", year=" + year +
+                ", isArchived=" + isArchived +
+                ", teacher=" + teacher.getId() +
+                ", weeks=" + weeks.size() +
+                '}';
+    }
 
     public List<LocalDate> generateMondayDatesOfYear() {
         List<LocalDate> mondays = new ArrayList<>();

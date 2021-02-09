@@ -15,29 +15,24 @@ import java.util.Set;
 @Getter
 @Setter
 @EqualsAndHashCode(of = {"id"}, callSuper = false)
-@ToString
+
 public class Student extends User {
 
     @Id
     private Long id;
 
-    @ToString.Exclude
     @OneToMany(mappedBy = "student")
     private Set<IndividualClass> individualClasses;
 
-    @ToString.Exclude
     @ManyToMany(mappedBy = "students")
     private Set<Teacher> teachers = new HashSet<>();
 
-    @ToString.Exclude
     @OneToMany(mappedBy = "regularStudent")
     private Set<Slot> slots = new HashSet<>();
 
-    @ToString.Exclude
     @OneToMany(mappedBy = "student")
     private Set<Payment> payments = new HashSet<>();
 
-    @ToString.Exclude
     @OneToMany(mappedBy = "notRegularStudent")
     private Set<Rebooking> rebookings = new HashSet<>();
 

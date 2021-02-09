@@ -20,7 +20,7 @@ import java.util.Set;
 @Getter
 @Setter
 @EqualsAndHashCode(of = {"id"})
-@ToString
+@ToString(exclude = {"student", "teacher", "paidLessons"})
 public class Payment {
 
     @Id
@@ -35,17 +35,14 @@ public class Payment {
     @Digits(integer = 5, fraction = 2)
     private BigDecimal sum;
 
-    @ToString.Exclude
     @Valid
     @ManyToOne
     private Student student;
 
-    @ToString.Exclude
     @Valid
     @ManyToOne
     private Teacher teacher;
 
-    @ToString.Exclude
     @OneToMany(mappedBy = "payment")
     private Set<Lesson> paidLessons = new HashSet<>();
 }

@@ -26,18 +26,16 @@ public class MySimpleUrlAuthenticationSuccessHandler
 
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request,
-                                        HttpServletResponse response, Authentication authentication)
-            throws IOException {
+                                        HttpServletResponse response,
+                                        Authentication authentication) throws IOException {
 
         handle(request, response, authentication);
         clearAuthenticationAttributes(request);
     }
 
-    protected void handle(
-            HttpServletRequest request,
-            HttpServletResponse response,
-            Authentication authentication
-    ) throws IOException {
+    protected void handle(HttpServletRequest request,
+                          HttpServletResponse response,
+                          Authentication authentication) throws IOException {
 
         String targetUrl = determineTargetUrl(authentication);
 
@@ -47,12 +45,10 @@ public class MySimpleUrlAuthenticationSuccessHandler
                             + targetUrl);
             return;
         }
-
         redirectStrategy.sendRedirect(request, response, targetUrl);
     }
 
     protected String determineTargetUrl(final Authentication authentication) {
-
         Map<String, String> roleTargetUrlMap = new HashMap<>();
         roleTargetUrlMap.put("ROLE_TEACHER", "/teacher/cockpit");
         roleTargetUrlMap.put("ROLE_STUDENT", "/student/profile");

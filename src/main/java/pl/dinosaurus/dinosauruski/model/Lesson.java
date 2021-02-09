@@ -18,7 +18,7 @@ import java.time.LocalDate;
 @Getter
 @Setter
 @EqualsAndHashCode(of = {"id"})
-@ToString
+@ToString(exclude = {"slot", "payment", "week", "rebooking",})
 public class Lesson {
 
     @Id
@@ -49,22 +49,27 @@ public class Lesson {
     @Digits(integer = 5, fraction = 2)
     private BigDecimal addedPayment;
 
-    @ToString.Exclude
     @Valid
     @ManyToOne
     private Slot slot;
 
-    @ToString.Exclude
     @Valid
     @ManyToOne()
     private WeekInCalendar week;
 
-    @ToString.Exclude
     @OneToOne(mappedBy = "lesson")
     private Rebooking rebooking;
 
-    @ToString.Exclude
     @Valid
     @ManyToOne
     private Payment payment;
+
+//    @PrePersist
+//    public void prePersist() {
+//       cancelledByTeacher = false;
+//       cancelledByStudent = false;
+//       cancelledLastMinute = false;
+//       paid = false;
+//       rebooked = false;
+//    }
 }

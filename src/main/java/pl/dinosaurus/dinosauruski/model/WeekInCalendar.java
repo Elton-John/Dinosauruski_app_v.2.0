@@ -17,7 +17,6 @@ import java.util.Set;
 @Getter
 @Setter
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
-@ToString
 public class WeekInCalendar {
 
     @Id
@@ -42,12 +41,21 @@ public class WeekInCalendar {
     @org.hibernate.annotations.Type(type = "true_false")
     private Boolean isArchived;
 
-    @ToString.Exclude
     @ManyToOne
     private YearInCalendar yearInCalendar;
 
-    @ToString.Exclude
     @OneToMany(mappedBy = "week")
     private Set<Lesson> lessons = new HashSet<>();
 
+    @Override
+    public String toString() {
+        return "WeekInCalendar{" +
+                "id=" + id +
+                ", numberOfWeek=" + numberOfWeek +
+                ", mondayDate=" + mondayDate +
+                ", isGenerated=" + isGenerated +
+                ", isArchived=" + isArchived +
+                ", yearInCalendar=" + yearInCalendar.getYear() +
+                '}';
+    }
 }
