@@ -8,8 +8,10 @@ import pl.dinosaurus.dinosauruski.model.User;
 import pl.dinosaurus.dinosauruski.security.Role;
 import pl.dinosaurus.dinosauruski.security.RoleRepository;
 
+import javax.persistence.EntityNotFoundException;
 import java.util.Collections;
 import java.util.HashSet;
+import java.util.Optional;
 
 @Service
 @AllArgsConstructor
@@ -22,7 +24,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public boolean emailAlreadyExist(String email) {
         return userRepository.findByEmail(email) != null;
-   }
+    }
 
     @Override
     public User findByEmail(String email) {
@@ -32,11 +34,6 @@ public class UserServiceImpl implements UserService {
     @Override
     public void saveNewUser(User user) {
         setProperFields(user);
-        userRepository.save(user);
-    }
-
-    @Override
-    public void update(User user) {
         userRepository.save(user);
     }
 
@@ -66,4 +63,25 @@ public class UserServiceImpl implements UserService {
         user.setRoles(new HashSet<>(Collections.singletonList(role)));
     }
 
+    @Override
+    public UserBasicEditionDTO getUserBasicEditionDtoById(Long teacherId) {
+        Optional<User> optional = userRepository.findById(teacherId);
+        User user = optional.orElseThrow(EntityNotFoundException::new);
+        UserBasicEditionDTO dto = new UserBasicEditionDTO();
+        dto.setId(user.getId());
+        dto.setFirstName(user.getFirstName());
+        dto.setLastName(user.getLastName());
+        dto.setNickname(user.getNickname());
+        return dto;
+    }
+
+    @Override
+    public User findById(Long teacherId) {
+        return userRepository.findById(teacherId).orElseThrow(EntityNotFoundException::new);
+    }
+
+    @Override
+    public void update(User user) {
+        userRepository.save(user);
+    }
 }

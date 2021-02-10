@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import pl.dinosaurus.dinosauruski.model.User;
-import pl.dinosaurus.dinosauruski.user.UserDto;
+import pl.dinosaurus.dinosauruski.user.UserCreationDto;
 import pl.dinosaurus.dinosauruski.user.UserFactory;
 import pl.dinosaurus.dinosauruski.user.UserService;
 
@@ -29,7 +29,7 @@ public class RegistrationController {
 
     @GetMapping("/register")
     public String registrationForm(Model model) {
-        model.addAttribute("user", new UserDto());
+        model.addAttribute("user", new UserCreationDto());
         model.addAttribute("types", types());
         return "register/form";
     }
@@ -37,41 +37,41 @@ public class RegistrationController {
 
     @PostMapping("/register")
     public String registerUserAccount(
-            @ModelAttribute("user") @Valid UserDto userDto, BindingResult result, Model model) {
+            @ModelAttribute("user") @Valid UserCreationDto userCreationDto, BindingResult result, Model model) {
         if (result.hasErrors()) {
             return "register/form";
         }
 
-        if (!emailIsUnique(userDto)) {
+        if (!emailIsUnique(userCreationDto)) {
             model.addAttribute("errorMessage", "użytkownik z takim adresem email już istnieje");
             return "login";
         }
 
-        if (!passwordsAreTheSame(userDto)) {
+        if (!passwordsAreTheSame(userCreationDto)) {
             model.addAttribute("passwordError", "hasła są różne");
             return "register/form";
         }
 
-        User user = userFactory.getUser(userDto);
-        user.setFirstName(userDto.getFirstName());
-        user.setLastName(userDto.getLastName());
-        user.setNickname(userDto.getNickname());
-        user.setEmail(userDto.getEmail());
-        user.setPassword(userDto.getPassword());
-        user.setType(userDto.getType());
+        User user = userFactory.getUser(userCreationDto);
+        user.setFirstName(userCreationDto.getFirstName());
+        user.setLastName(userCreationDto.getLastName());
+        user.setNickname(userCreationDto.getNickname());
+        user.setEmail(userCreationDto.getEmail());
+        user.setPassword(userCreationDto.getPassword());
+        user.setType(userCreationDto.getType());
         registrationService.saveUserBeforeEmailVerification(user);
         return "register/confirm";
     }
 
-    private boolean emailIsUnique(UserDto userDto) {
-        String email = userDto.getEmail();
+    private boolean emailIsUnique(UserCreationDto userCreationDto) {
+        String email = userCreationDto.getEmail();
         boolean emailAlreadyExist = userService.emailAlreadyExist(email);
         return !emailAlreadyExist;
     }
 
-    private boolean passwordsAreTheSame(UserDto userDto) {
-        String password = userDto.getPassword();
-        String repeatedPassword = userDto.getRepeatedPassword();
+    private boolean passwordsAreTheSame(UserCreationDto userCreationDto) {
+        String password = userCreationDto.getPassword();
+        String repeatedPassword = userCreationDto.getRepeatedPassword();
         return password.equals(repeatedPassword);
     }
 

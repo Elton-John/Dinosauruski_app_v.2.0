@@ -10,7 +10,10 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import pl.dinosaurus.dinosauruski.model.CurrentUser;
 import pl.dinosaurus.dinosauruski.model.Teacher;
+import pl.dinosaurus.dinosauruski.model.User;
 import pl.dinosaurus.dinosauruski.model.YearInCalendar;
+import pl.dinosaurus.dinosauruski.user.UserService;
+import pl.dinosaurus.dinosauruski.user.UserServiceImpl;
 import pl.dinosaurus.dinosauruski.year.YearService;
 
 import javax.servlet.http.HttpServletRequest;
@@ -23,6 +26,7 @@ public class HomeController {
 
     private final SampleDataService sampleDataService;
     private final YearService yearService;
+    private final UserService userService;
 
     @GetMapping("/")
     public String home() {
@@ -47,8 +51,11 @@ public class HomeController {
     @Secured("ROLE_TEACHER")
     @GetMapping("/teacher/cockpit")
     public String cockpit(@AuthenticationPrincipal CurrentUser customUser, Model model) {
-        Teacher user = (Teacher) customUser.getUser();
-        Set<YearInCalendar> years = yearService.getYearsByTeacherId(user.getId());
+//        Teacher user = (Teacher) customUser.getUser();
+        Long teacherId = customUser.getUser().getId();
+        User user = userService.findById(teacherId);
+
+        Set<YearInCalendar> years = yearService.getYearsByTeacherId(teacherId);
         model.addAttribute("years", years);
         model.addAttribute("teacher", user);
         return "teacher/cockpit";

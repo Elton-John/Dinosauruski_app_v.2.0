@@ -9,15 +9,15 @@ import pl.dinosaurus.dinosauruski.model.User;
 @Service
 public class UserFactory {
 
-    public User getUser(UserDto userDto) {
-        String type = userDto.getType();
+    public User getUser(UserCreationDto userCreationDto) {
+        String type = userCreationDto.getType();
         switch (type) {
             case "teacher":
                 return new Teacher();
             case "student":
                 return new Student();
             default:
-                throw new InvalidPropertyException(UserDto.class, type, "invalid user type");
+                throw new InvalidPropertyException(UserCreationDto.class, type, "invalid user type");
         }
     }
 }
