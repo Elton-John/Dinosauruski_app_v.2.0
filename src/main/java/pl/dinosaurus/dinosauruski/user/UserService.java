@@ -1,8 +1,10 @@
 package pl.dinosaurus.dinosauruski.user;
 
+import pl.dinosaurus.dinosauruski.model.Slot;
 import pl.dinosaurus.dinosauruski.model.User;
 
 import javax.persistence.EntityNotFoundException;
+import java.util.List;
 
 public interface UserService {
 
@@ -14,7 +16,8 @@ public interface UserService {
 
     void update(User user);
 
-    UserBasicEditionDTO getUserBasicEditionDtoById(Long teacherId);
+    UserBasicEditionDTO getUserBasicEditionDtoById(Long id);
 
-    User findById(Long teacherId) throws EntityNotFoundException;
+    User findById(Long id) throws EntityNotFoundException;
+
 }

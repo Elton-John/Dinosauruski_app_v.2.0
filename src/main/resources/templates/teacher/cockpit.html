@@ -177,11 +177,11 @@
             <div th:each="slot : ${freeSlots}">
                 <a class="badge badge-success btn-block my-2 py-1  "
                    th:href="@{/teacher/slots/booked/edit/{id}(id=${slot.getId()})}">
-                    <span th:text="${slot.time} +' '+${slot.dayOfWeek.translation}">termin</span>
+                    <span th:text="${slot.time} +' '+${slot.dayOfWeek.getInPolish()}">termin</span>
                 </a>
             </div>
 
-            <a th:href="@{/teacher/slots}" class="btn btn-success mt-4 text-uppercase">Zarządzaj</a>
+            <a th:href="@{/teacher/slots/all}" class="btn btn-success mt-4 text-uppercase">Zarządzaj</a>
 
         </div>
     </div>

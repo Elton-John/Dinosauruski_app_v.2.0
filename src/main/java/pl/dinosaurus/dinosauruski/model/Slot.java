@@ -1,11 +1,11 @@
 package pl.dinosaurus.dinosauruski.model;
 
 import lombok.*;
+import pl.dinosaurus.dinosauruski.slot.DAY_OF_WEEK;
 
 import javax.persistence.*;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
-import java.time.DayOfWeek;
 import java.time.LocalTime;
 
 @Entity
@@ -23,7 +23,7 @@ public class Slot {
     private Long id;
 
     @NotNull
-    private DayOfWeek dayOfWeek;
+    private DAY_OF_WEEK dayOfWeek;
 
     @NotNull
     private LocalTime time;
@@ -34,7 +34,7 @@ public class Slot {
     @NotNull
     private boolean archived;
 
-
+    @NotNull
     @ManyToOne
     private Teacher teacher;
 

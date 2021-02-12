@@ -8,16 +8,15 @@ import org.springframework.security.web.WebAttributes;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import pl.dinosaurus.dinosauruski.model.CurrentUser;
-import pl.dinosaurus.dinosauruski.model.Teacher;
-import pl.dinosaurus.dinosauruski.model.User;
-import pl.dinosaurus.dinosauruski.model.YearInCalendar;
+import pl.dinosaurus.dinosauruski.model.*;
+import pl.dinosaurus.dinosauruski.teacherRole.teacher.TeacherService;
 import pl.dinosaurus.dinosauruski.user.UserService;
 import pl.dinosaurus.dinosauruski.user.UserServiceImpl;
 import pl.dinosaurus.dinosauruski.year.YearService;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.util.List;
 import java.util.Set;
 
 @Controller
@@ -27,6 +26,7 @@ public class HomeController {
     private final SampleDataService sampleDataService;
     private final YearService yearService;
     private final UserService userService;
+    private final TeacherService teacherService;
 
     @GetMapping("/")
     public String home() {
@@ -59,9 +59,10 @@ public class HomeController {
         Long teacherId = customUser.getUser().getId();
         User user = userService.findById(teacherId);
 
-        Set<YearInCalendar> years = yearService.getYearsByTeacherId(teacherId);
-        model.addAttribute("years", years);
+
         model.addAttribute("teacher", user);
+        List<Slot> slots = teacherService.findAllFreeSlotsByTeacherId(teacherId);
+        model.addAttribute("freeSlots", slots);
         return "teacher/cockpit";
     }
 
