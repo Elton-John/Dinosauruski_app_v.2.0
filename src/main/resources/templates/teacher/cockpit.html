@@ -20,7 +20,7 @@
                 <h5 class="text-white h6"> WITAJ, <span th:text="${teacher.getNickname()}"></span></h5>
                 <h5><a th:href="@{/teacher/edit/{id}(id=${teacher.getId()})}" class="text-white h6"> EDYTUJ PROFIL</a>
                 </h5>
-                <h5><a th:href="@{/logout}" class="text-white h6"> WYLOGUJ SIĘ </a></h5>
+                <h5><a th:href="@{/user/logout}" class="text-white h6"> WYLOGUJ SIĘ </a></h5>
                 <a th:href="@{/teacher/submit/{id}(id=${teacher.getId()})}" class="text-muted"> USUŃ KONTO</a>
             </div>
         </div>

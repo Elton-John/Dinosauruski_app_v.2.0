@@ -45,13 +45,17 @@ public class HomeController {
             }
         }
         model.addAttribute("errorMessage", errorMessage);
-        return "login";
+        return "user/login";
+    }
+
+    @GetMapping("user/logout")
+    public String logout() {
+        return "user/logout";
     }
 
     @Secured("ROLE_TEACHER")
     @GetMapping("/teacher/cockpit")
     public String cockpit(@AuthenticationPrincipal CurrentUser customUser, Model model) {
-//        Teacher user = (Teacher) customUser.getUser();
         Long teacherId = customUser.getUser().getId();
         User user = userService.findById(teacherId);
 
