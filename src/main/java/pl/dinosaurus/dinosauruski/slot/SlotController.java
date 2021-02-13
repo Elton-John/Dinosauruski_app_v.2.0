@@ -8,6 +8,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import pl.dinosaurus.dinosauruski.model.CurrentUser;
 import pl.dinosaurus.dinosauruski.model.Slot;
@@ -27,13 +28,13 @@ public class SlotController {
 
     @GetMapping("/teacher/slots/new")
     public String getNewSlotForm(Model model) {
-        model.addAttribute("slot", new NewSlotDto());
+        model.addAttribute("slot", new FreeSlotDto());
         return "teacher/slots/new";
     }
 
     @PostMapping("/teacher/slots/new")
     public String createNewSlot(@AuthenticationPrincipal CurrentUser currentUser,
-                                @Valid @ModelAttribute("slot") NewSlotDto dto, BindingResult result) {
+                                @Valid @ModelAttribute("slot") FreeSlotDto dto, BindingResult result) {
         if (result.hasErrors()) {
             return "teacher/slots/new";
         }
@@ -56,4 +57,52 @@ public class SlotController {
         return "teacher/slots/all";
     }
 
+    @GetMapping("/teacher/slots/edit/{id}")
+    public String editForm(Model model, @PathVariable("id") Long slotId) {
+        Slot slot = slotService.findByIdOrThrow(slotId);
+        if (slot.isBooked()) {
+            ////////
+            return "teacher/slots/booked/edit";
+        }
+        FreeSlotDto dto = new FreeSlotDto(slotId, slot.getDayOfWeek(), slot.getTime());
+        model.addAttribute("slot", dto);
+        return "teacher/slots/free/edit";
+    }
+
+    @PostMapping("/teacher/slots/edit/{id}")
+    public String edit(Model model, @PathVariable("id") Long slotId,
+                       @ModelAttribute("slot") FreeSlotDto dto) {
+        Slot slot = slotService.findByIdOrThrow(slotId);
+        if (slot.isBooked()) {
+            ///////////
+        } else if (!slot.isBooked()) {
+            slot.setDayOfWeek(dto.getDayOfWeek());
+            slot.setTime(dto.getTime());
+        }
+        slotService.update(slot);
+        return "redirect:/teacher/slots/all";
+    }
+
+    @GetMapping("/teacher/slots/delete/{id}")
+    public String confirmDeleting(Model model, @PathVariable("id") Long slotId) {
+        Slot slot = slotService.findByIdOrThrow(slotId);
+        if (slot.isBooked()) {
+            ////////
+            return "teacher/slots/booked/delete";
+        }
+        FreeSlotDto dto = new FreeSlotDto(slotId, slot.getDayOfWeek(), slot.getTime());
+        model.addAttribute("slot", dto);
+        return "teacher/slots/free/delete";
+    }
+
+    @PostMapping("/teacher/slots/delete/{id}")
+    public String delete(Model model, @PathVariable("id") Long slotId,
+                         @ModelAttribute("slot") FreeSlotDto dto) {
+        Slot slot = slotService.findByIdOrThrow(slotId);
+        if (slot.isBooked()) {
+            ///////////
+        }
+        slotService.delete(slot);
+        return "redirect:/teacher/slots/all";
+    }
 }

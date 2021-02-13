@@ -36,23 +36,15 @@
                     <td class="text-warning" th:if="${slot.booked} == true">BOOKED</td>
                     <td class="text-success" th:if="${slot.booked} == false">FREE</td>
                     <td>
-                        <div th:if="${slot.booked}==true">
+                        <div>
                             <a class="btn btn-warning text-uppercase"
-                               th:href="@{/teacher/slots/booked/edit/{id}(id=${slot.getId()})}"> edytuj</a>
-                        </div>
-                        <div th:if="${slot.booked}==false">
-                            <a class="btn btn-warning text-uppercase"
-                               th:href="@{/teacher/slots/free/edit/{id}(id=${slot.getId()})}"> edytuj</a>
+                               th:href="@{/teacher/slots/edit/{id}(id=${slot.getId()})}"> edytuj</a>
                         </div>
                     </td>
                     <td>
-                        <div th:if="${slot.booked}==true">
+                        <div>
                             <a class="btn btn-danger text-uppercase"
-                               th:href="@{/teacher/slots/booked/submit/{id}(id=${slot.getId()})}"> usuń</a>
-                        </div>
-                        <div th:if="${slot.booked}==false">
-                            <a class="btn btn-danger text-uppercase"
-                               th:href="@{/teacher/slots/free/submit/{id}(id=${slot.getId()})}"> usuń</a>
+                               th:href="@{/teacher/slots/delete/{id}(id=${slot.getId()})}"> usuń</a>
                         </div>
                     </td>
                 </tr>
