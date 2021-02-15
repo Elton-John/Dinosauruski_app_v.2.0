@@ -22,7 +22,7 @@ public class IndividualClass {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @DecimalMin(value = "0.0", inclusive = false, message = "must be greater than 0.0")
+    @DecimalMin(value = "0.0", message = "must be greater than 0.0")
     @Digits(integer = 3, fraction = 2)
     private BigDecimal priceForOneLesson;
 

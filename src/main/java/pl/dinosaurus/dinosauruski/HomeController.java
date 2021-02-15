@@ -24,9 +24,7 @@ import java.util.Set;
 public class HomeController {
 
     private final SampleDataService sampleDataService;
-    private final YearService yearService;
-    private final UserService userService;
-    private final TeacherService teacherService;
+
 
     @GetMapping("/")
     public String home() {
@@ -53,18 +51,7 @@ public class HomeController {
         return "user/logout";
     }
 
-    @Secured("ROLE_TEACHER")
-    @GetMapping("/teacher/cockpit")
-    public String cockpit(@AuthenticationPrincipal CurrentUser customUser, Model model) {
-        Long teacherId = customUser.getUser().getId();
-        User user = userService.findById(teacherId);
 
-
-        model.addAttribute("teacher", user);
-        List<Slot> slots = teacherService.findAllFreeSlotsByTeacherId(teacherId);
-        model.addAttribute("freeSlots", slots);
-        return "teacher/cockpit";
-    }
 
     @Secured("ROLE_STUDENT")
     @GetMapping("/student/profile")

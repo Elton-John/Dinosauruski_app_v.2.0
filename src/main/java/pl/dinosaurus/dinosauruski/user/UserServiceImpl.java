@@ -21,20 +21,16 @@ public class UserServiceImpl implements UserService {
     private final RoleRepository roleRepository;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
-    @Override
-    public boolean emailAlreadyExist(String email) {
-        return userRepository.findByEmail(email) != null;
-    }
 
     @Override
-    public User findByEmail(String email) {
+    public Optional<User> findByEmail(String email) {
         return userRepository.findByEmail(email);
     }
 
     @Override
-    public void saveNewUser(User user) {
+    public User saveNewUser(User user) {
         setProperFields(user);
-        userRepository.save(user);
+        return userRepository.save(user);
     }
 
     private void setProperFields(User user) {
@@ -76,8 +72,14 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User findById(Long teacherId) {
-        return userRepository.findById(teacherId).orElseThrow(EntityNotFoundException::new);
+    public User findById(Long id) {
+        return userRepository.findById(id).orElseThrow(EntityNotFoundException::new);
+    }
+
+    @Override
+    public boolean userAlreadyExistsByEmail(String email) {
+        Optional<User> optionalUser = findByEmail(email);
+        return optionalUser.isPresent();
     }
 
     @Override

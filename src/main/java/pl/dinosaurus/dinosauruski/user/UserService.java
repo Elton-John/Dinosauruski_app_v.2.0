@@ -1,18 +1,17 @@
 package pl.dinosaurus.dinosauruski.user;
 
-import pl.dinosaurus.dinosauruski.model.Slot;
 import pl.dinosaurus.dinosauruski.model.User;
 
 import javax.persistence.EntityNotFoundException;
-import java.util.List;
+import java.util.Optional;
 
 public interface UserService {
 
-    boolean emailAlreadyExist(String email);
+    boolean userAlreadyExistsByEmail(String email);
 
-    User findByEmail(String email);
+    Optional<User> findByEmail(String email);
 
-    void saveNewUser(User user);
+    User saveNewUser(User user);
 
     void update(User user);
 
@@ -20,4 +19,6 @@ public interface UserService {
 
     User findById(Long id) throws EntityNotFoundException;
 
+
 }
+

@@ -1,6 +1,8 @@
 package pl.dinosaurus.dinosauruski.year;
 
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.junit.jupiter.MockitoExtension;
 import pl.dinosaurus.dinosauruski.model.YearInCalendar;
 
 import java.time.LocalDate;
@@ -8,7 +10,7 @@ import java.util.List;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
-
+@ExtendWith(MockitoExtension.class)
 public class YearInCalendarTest {
 
 

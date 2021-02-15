@@ -15,7 +15,6 @@ import java.util.Set;
 @Inheritance(strategy = InheritanceType.JOINED)
 @Table(name = "users")
 @AllArgsConstructor
-@NoArgsConstructor
 @Getter
 @Setter
 @EqualsAndHashCode(of = {"id"})
@@ -43,7 +42,7 @@ public class User {
 
     @NotBlank
     @Email
-    @Column(nullable = false, unique = true)
+    @Column(nullable = false)
     @Size(max = 50)
     private String email;
 
@@ -62,6 +61,10 @@ public class User {
     @ManyToMany(fetch = FetchType.EAGER)
     private Set<Role> roles = new HashSet<>();
 
+    public User() {
+        this.hasActivatedAccount = false;
+    }
+
     public void addRole(Role role) {
         if (roles == null) {
             roles = new HashSet<>();
@@ -74,4 +77,5 @@ public class User {
     public String getFullName() {
         return firstName + " " + lastName;
     }
+
 }

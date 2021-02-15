@@ -33,7 +33,7 @@ public class Teacher extends User {
 //    private Set<WeekInCalendar> weeks = new HashSet<>();
 
     @OneToMany(mappedBy = "teacher")
-    private Set<IndividualClass> individualClasses;
+    private Set<IndividualClass> classes;
 
     @OneToMany(mappedBy = "teacher")
     private Set<YearInCalendar> years;

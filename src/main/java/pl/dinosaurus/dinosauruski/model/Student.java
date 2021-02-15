@@ -22,7 +22,7 @@ public class Student extends User {
     private Long id;
 
     @OneToMany(mappedBy = "student")
-    private Set<IndividualClass> individualClasses;
+    private Set<IndividualClass> classes;
 
     @ManyToMany(mappedBy = "students")
     private Set<Teacher> teachers = new HashSet<>();
