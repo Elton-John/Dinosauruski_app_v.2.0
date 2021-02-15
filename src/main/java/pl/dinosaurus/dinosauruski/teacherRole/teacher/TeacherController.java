@@ -1,6 +1,6 @@
 package pl.dinosaurus.dinosauruski.teacherRole.teacher;
 
-import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -15,10 +15,14 @@ import pl.dinosaurus.dinosauruski.user.UserService;
 import javax.validation.Valid;
 
 @Controller
-@AllArgsConstructor
+
 public class TeacherController {
 
     private final UserService userService;
+
+    public TeacherController(@Qualifier("teacherService") UserService userService) {
+        this.userService = userService;
+    }
 
     @GetMapping("teacher/edit/{id}")
     public String editForm(Model model, @PathVariable("id") Long teacherId) {
