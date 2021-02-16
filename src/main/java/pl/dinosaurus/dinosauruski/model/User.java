@@ -78,4 +78,24 @@ public class User {
         return firstName + " " + lastName;
     }
 
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+        if (firstName.isBlank()){
+            this.firstName = "Anonymous";
+        }
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+        if (lastName.isBlank()){
+            this.lastName = "Anonymous";
+        }
+    }
+
+    public void setNickname(String nickname) {
+        this.nickname = nickname;
+        if (nickname.isBlank()){
+            this.nickname = "Noname";
+        }
+    }
 }
