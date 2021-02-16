@@ -15,12 +15,11 @@ import pl.dinosaurus.dinosauruski.user.UserService;
 import javax.validation.Valid;
 
 @Controller
-
 public class TeacherController {
 
     private final UserService userService;
 
-    public TeacherController(@Qualifier("teacherService") UserService userService) {
+    public TeacherController(@Qualifier("teacherServiceImpl") UserService userService) {
         this.userService = userService;
     }
 

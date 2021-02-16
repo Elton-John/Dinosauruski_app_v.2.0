@@ -11,6 +11,7 @@ import pl.dinosaurus.dinosauruski.model.Student;
 import pl.dinosaurus.dinosauruski.model.Teacher;
 import pl.dinosaurus.dinosauruski.student.StudentService;
 import pl.dinosaurus.dinosauruski.teacherRole.teacher.TeacherService;
+import pl.dinosaurus.dinosauruski.teacherStudent.TeacherStudentService;
 
 import java.util.List;
 
@@ -20,10 +21,12 @@ public class CockpitController {
 
     private final StudentService studentService;
     private final TeacherService teacherService;
+    private final TeacherStudentService teacherStudentService;
 
-    public CockpitController(StudentService studentService, TeacherService teacherService) {
+    public CockpitController(StudentService studentService, TeacherService teacherService, TeacherStudentService teacherStudentService) {
         this.studentService = studentService;
         this.teacherService = teacherService;
+        this.teacherStudentService = teacherStudentService;
     }
 
     @GetMapping("/teacher/cockpit")
@@ -39,7 +42,7 @@ public class CockpitController {
     public String studentsList(@AuthenticationPrincipal CurrentUser currentUser, Model model) {
         Teacher teacher = (Teacher) currentUser.getUser();
         model.addAttribute("teacher", teacher);
-        List<Student> students = studentService.findAllStudentsByTeacherId(teacher.getId());
+        List<Student> students = teacherStudentService.findAllStudentsByTeacherId(teacher.getId());
         model.addAttribute("students", students);
         return "teacher/cockpit/students";
     }

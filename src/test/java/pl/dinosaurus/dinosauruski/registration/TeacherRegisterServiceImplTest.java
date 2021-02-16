@@ -9,18 +9,18 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import pl.dinosaurus.dinosauruski.email.EmailService;
 import pl.dinosaurus.dinosauruski.model.Teacher;
 import pl.dinosaurus.dinosauruski.model.User;
-import pl.dinosaurus.dinosauruski.user.UserService;
+import pl.dinosaurus.dinosauruski.registration.teacher.TeacherRegisterServiceImpl;
+import pl.dinosaurus.dinosauruski.teacherRole.teacher.TeacherService;
 import pl.dinosaurus.dinosauruski.year.YearService;
 
 import java.time.Year;
 
-import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 
 @ExtendWith(MockitoExtension.class)
-class RegistrationServiceTest {
+class TeacherRegisterServiceImplTest {
     @Mock
-    private UserService userService;
+    private TeacherService teacherService;
     @Mock
     private VerificationTokenRepository tokenRepository;
     @Mock
@@ -29,7 +29,7 @@ class RegistrationServiceTest {
     private YearService yearService;
 
     @InjectMocks
-    RegistrationService registrationService;
+    TeacherRegisterServiceImpl teacherRegisterService;
 
     @DisplayName("if new user is a teacher, then yearInCalendar has set")
     @Test
@@ -40,15 +40,9 @@ class RegistrationServiceTest {
         teacher.setType("teacher");
         int year = Year.now().getValue();
 
-        User student = new Teacher();
-        student.setId(2L);
-        student.setType("student");
-
         //when  //then
-        registrationService.updateUserAfterVerification(teacher);
-        registrationService.updateUserAfterVerification(student);
+        teacherRegisterService.updateUserAfterVerification(teacher);
         verify(yearService).setYearInCalendarForTeacher(year, (Teacher) teacher);
-        verify(yearService, never()).setYearInCalendarForTeacher(year, (Teacher) student);
 
     }
 

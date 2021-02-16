@@ -19,6 +19,7 @@ public interface UserService {
 
     User findById(Long id) throws EntityNotFoundException;
 
+    void resetPassword(User user, String newPassword);
 
 }
 

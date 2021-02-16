@@ -1,7 +1,6 @@
-package pl.dinosaurus.dinosauruski.registration;
+package pl.dinosaurus.dinosauruski.registration.teacher;
 
 import antlr.TokenStreamException;
-import org.springframework.beans.InvalidPropertyException;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -11,7 +10,9 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import pl.dinosaurus.dinosauruski.model.User;
-import pl.dinosaurus.dinosauruski.student.StudentService;
+import pl.dinosaurus.dinosauruski.registration.RegisterService;
+import pl.dinosaurus.dinosauruski.model.VerificationToken;
+import pl.dinosaurus.dinosauruski.registration.VerificationTokenService;
 import pl.dinosaurus.dinosauruski.teacherRole.teacher.TeacherService;
 import pl.dinosaurus.dinosauruski.user.UserCreationDto;
 import pl.dinosaurus.dinosauruski.user.UserFactory;
@@ -22,21 +23,25 @@ import java.util.Arrays;
 import java.util.List;
 
 @Controller
-public class RegistrationController {
+public class TeacherRegisterController {
 
-    private final TeacherRegistrationServiceImpl teacherRegistrationService;
+    private final RegisterService registerService;
+
     private final UserService userService;
     private final UserFactory userFactory;
     private final TeacherService teacherService;
-    private final StudentService studentService;
+
     private final VerificationTokenService tokenService;
 
-    public RegistrationController(RegistrationService teacherRegistrationService, @Qualifier("userServiceImpl") UserService userService, UserFactory userFactory, TeacherService teacherService, StudentService studentService, VerificationTokenService tokenService) {
-        this.teacherRegistrationService = (TeacherRegistrationServiceImpl) teacherRegistrationService;
+    public TeacherRegisterController(@Qualifier("teacherRegisterServiceImpl") RegisterService registerService,
+                                     @Qualifier("userServiceImpl") UserService userService,
+                                     UserFactory userFactory,
+                                     TeacherService teacherService,
+                                     VerificationTokenService tokenService) {
+        this.registerService = registerService;
         this.userService = userService;
         this.userFactory = userFactory;
         this.teacherService = teacherService;
-        this.studentService = studentService;
         this.tokenService = tokenService;
     }
 
@@ -79,23 +84,8 @@ public class RegistrationController {
         user.setPassword(userCreationDto.getPassword());
         user.setType(userCreationDto.getType());
 
-        saveBeforeEmailVerification(user);
+        registerService.saveUserBeforeEmailVerification(user);
         return "register/confirm";
-    }
-
-    private void saveBeforeEmailVerification(User user) {
-        String type = user.getType();
-        switch (type) {
-            case "teacher":
-                teacherRegistrationService.saveUserBeforeEmailVerification(user);
-                break;
-            case "student":
-                ///
-                break;
-            default:
-                throw new InvalidPropertyException(User.class, type, "invalid user type");
-        }
-
     }
 
     private boolean passwordsAreTheSame(UserCreationDto userCreationDto) {
@@ -113,22 +103,8 @@ public class RegistrationController {
             return "register/fail";
         }
         User user = verificationToken.getUser();
-        updateUserAfterVerification(user);
+        registerService.updateUserAfterVerification(user);
         return "redirect:/login";
-    }
-
-    private void updateUserAfterVerification(User user) {
-        String type = user.getType();
-        switch (type) {
-            case "teacher":
-                teacherRegistrationService.updateUserAfterVerification(user);
-                break;
-            case "student":
-                ///
-                break;
-            default:
-                throw new InvalidPropertyException(User.class, type, "invalid user type");
-        }
     }
 
     @ModelAttribute("types")

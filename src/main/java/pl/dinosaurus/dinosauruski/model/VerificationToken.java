@@ -1,4 +1,4 @@
-package pl.dinosaurus.dinosauruski.registration;
+package pl.dinosaurus.dinosauruski.model;
 
 import lombok.*;
 import pl.dinosaurus.dinosauruski.model.User;

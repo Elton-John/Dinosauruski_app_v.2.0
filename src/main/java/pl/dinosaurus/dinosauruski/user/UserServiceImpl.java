@@ -86,4 +86,9 @@ public class UserServiceImpl implements UserService {
     public void update(User user) {
         userRepository.save(user);
     }
+
+    public void resetPassword(User user, String newPassword) {
+        user.setPassword(bCryptPasswordEncoder.encode(newPassword));
+        userRepository.save(user);
+    }
 }

@@ -3,7 +3,7 @@ package pl.dinosaurus.dinosauruski.registration;
 import pl.dinosaurus.dinosauruski.model.User;
 
 
-public interface RegistrationService {
+public interface RegisterService {
 
     User saveUserBeforeEmailVerification(User user);
 

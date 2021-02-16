@@ -15,7 +15,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-//@Transactional
+@Transactional
 
 public class TeacherServiceImpl extends UserServiceImpl implements TeacherService {
 
@@ -29,7 +29,6 @@ public class TeacherServiceImpl extends UserServiceImpl implements TeacherServic
         this.slotService = slotService;
         this.userRepository = userRepository1;
     }
-
 
     @Override
     public boolean userAlreadyExistsByEmail(String email) {

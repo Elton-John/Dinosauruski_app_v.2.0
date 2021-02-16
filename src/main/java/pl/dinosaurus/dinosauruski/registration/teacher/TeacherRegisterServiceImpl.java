@@ -1,4 +1,4 @@
-package pl.dinosaurus.dinosauruski.registration;
+package pl.dinosaurus.dinosauruski.registration.teacher;
 
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -6,6 +6,9 @@ import org.springframework.transaction.annotation.Transactional;
 import pl.dinosaurus.dinosauruski.email.EmailService;
 import pl.dinosaurus.dinosauruski.model.Teacher;
 import pl.dinosaurus.dinosauruski.model.User;
+import pl.dinosaurus.dinosauruski.registration.RegisterService;
+import pl.dinosaurus.dinosauruski.model.VerificationToken;
+import pl.dinosaurus.dinosauruski.registration.VerificationTokenService;
 import pl.dinosaurus.dinosauruski.teacherRole.teacher.TeacherService;
 import pl.dinosaurus.dinosauruski.year.YearService;
 
@@ -15,7 +18,7 @@ import java.util.Optional;
 @Service
 @Transactional
 @AllArgsConstructor
-public class TeacherRegistrationServiceImpl implements RegistrationService {
+public class TeacherRegisterServiceImpl implements RegisterService {
 
     private final TeacherService teacherService;
     private final VerificationTokenService tokenService;
@@ -25,7 +28,7 @@ public class TeacherRegistrationServiceImpl implements RegistrationService {
     public User saveUserBeforeEmailVerification(User user) {
         cleanNotUniqueEmails(user.getEmail());
         User saved = teacherService.saveNewUser(user);
-        sendVerificationTokenByEmail(user);
+        sendVerificationTokenByEmail(saved);
         return saved;
     }
 
