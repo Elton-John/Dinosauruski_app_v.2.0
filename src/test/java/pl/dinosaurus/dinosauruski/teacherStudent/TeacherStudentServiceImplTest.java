@@ -9,7 +9,7 @@ import pl.dinosaurus.dinosauruski.model.Student;
 import pl.dinosaurus.dinosauruski.registration.RegisterService;
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.*;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.verify;
 @ExtendWith(MockitoExtension.class)
@@ -28,15 +28,18 @@ class TeacherStudentServiceImplTest {
         //given
         Student student = new Student();
         student.setEmail("student@gmail.com");
+        student.setFirstName("");
+        student.setLastName("");
 
         //when
         teacherStudentService.createNewStudentByTeacher(student);
         //them
         verify(registerService).saveUserBeforeEmailVerification(student);
         assertNotNull(student.getPassword());
-        assertNotNull(student.getFirstName());
-        assertNotNull(student.getLastName());
-        assertNotNull(student.getNickname());
+        assertThat(student.getFirstName(), not(blankOrNullString()));
+//        assertNotNull(student.getFirstName());
+//        assertNotNull(student.getLastName());
+//        assertNotNull(student.getNickname());
         assertThat(student.getType(),is("student"));
     }
 }

@@ -8,7 +8,6 @@ import pl.dinosaurus.dinosauruski.registration.RegisterService;
 
 import java.util.Collections;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -34,8 +33,6 @@ public class TeacherStudentServiceImpl implements TeacherStudentService {
         student.setPassword(generatePassword());
         student.setNickname("Noname");
         student.setType("student");
-        student.setFirstName(Optional.ofNullable(student.getFirstName()).orElse("Anonymous"));
-        student.setLastName(Optional.ofNullable(student.getLastName()).orElse("Anonymous"));
         registerService.saveUserBeforeEmailVerification(student);
         return student;
     }
